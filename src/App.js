@@ -196,7 +196,9 @@ const App = () => {
           USERS LIST
         </Typography>
         {isLoading ? (
+          <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <CircularProgress color="primary" />
+          </div>
         ) : filteredUsers.length === 0 ? (
           <Typography variant="h6" color="textSecondary">
             No user found.
