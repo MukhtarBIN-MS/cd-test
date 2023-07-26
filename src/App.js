@@ -11,6 +11,9 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  Button,
+  CircularProgress, 
+  
 } from '@material-ui/core';
 import { Search as SearchIcon } from '@material-ui/icons';
 
@@ -21,6 +24,7 @@ const App = () => {
   const [ageRange, setAgeRange] = useState('');
   const [nationality, setNationality] = useState('');
   const [gender, setGender] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchUsers();
@@ -32,8 +36,10 @@ const App = () => {
       const data = await response.json();
       setUsers(data.results);
       setFilteredUsers(data.results);
+      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching users:', error);
+      setIsLoading(false);
     }
   };
 
@@ -73,20 +79,25 @@ const App = () => {
 
   return (
     <Container maxWidth="md" style={{ marginTop: 20 }}>
-      <Typography variant="h4" gutterBottom>
-        Random User Filter
-      </Typography>
-      <TextField
-        label="Search by name"
-        variant="outlined"
-        fullWidth
-        value={searchName}
-        onChange={handleSearch}
-        InputProps={{
-          endAdornment: <SearchIcon />,
-        }}
-        style={{ marginBottom: 10 }}
-      />
+    <Typography variant="h4" gutterBottom style={{ textAlign: 'center', marginBottom: '20px' }}>
+    CodeLab Test
+  </Typography>
+  
+      <Grid container spacing={2} justifyContent="center">
+      <Grid item xs={12} sm={8} md={4}>
+        <TextField
+          label="Search by name"
+          variant="outlined"
+          fullWidth
+          value={searchName}
+          onChange={handleSearch}
+          InputProps={{
+            endAdornment: <SearchIcon />,
+          }}
+          style={{ marginBottom: 10 }}
+        />
+      </Grid>
+    </Grid>
       <Grid container spacing={2} justifyContent="center">
         <Grid item xs={12} sm={6} md={4}>
           <FormControl fullWidth variant="outlined">
@@ -110,10 +121,12 @@ const App = () => {
               onChange={(e) => setNationality(e.target.value)}
             >
               <MenuItem value="">All</MenuItem>
-              <MenuItem value="AU">Australia</MenuItem>
+              <MenuItem value="NG">Nigeria</MenuItem>
               <MenuItem value="BR">Brazil</MenuItem>
               <MenuItem value="CA">Canada</MenuItem>
-              {/* Add more nationalities here */}
+              <MenuItem value="FR">France</MenuItem>
+              <MenuItem value="DE">Germany</MenuItem>
+              <MenuItem value="GB">United Kingdom</MenuItem>              
             </Select>
           </FormControl>
         </Grid>
@@ -128,8 +141,22 @@ const App = () => {
             </Select>
           </FormControl>
         </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+        <FormControl fullWidth variant="outlined">
+        <Button variant="contained" color="primary" onClick={handleFilter}>
+        Filter
+      </Button>
+      </FormControl>
+      </Grid>
       </Grid>
       <div style={{ marginTop: 20 }}>
+      {isLoading ? (
+        <CircularProgress color="primary" />
+      ) : filteredUsers.length === 0 ? (
+        <Typography variant="h6" color="textSecondary">
+          No user found.
+        </Typography>
+      ) : (
         <Grid container spacing={2}>
           {filteredUsers.map((user) => (
             <Grid item xs={12} sm={6} md={4} key={user.login.uuid}>
@@ -158,6 +185,7 @@ const App = () => {
             </Grid>
           ))}
         </Grid>
+        )}
       </div>
     </Container>
   );
