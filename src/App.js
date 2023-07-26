@@ -17,6 +17,24 @@ import {
 } from '@material-ui/core';
 import { Search as SearchIcon } from '@material-ui/icons';
 
+const countriesData = [
+  { value: '', label: 'All' },
+  { value: 'AU', label: 'Australia' },
+  { value: 'BR', label: 'Brazil' },
+  { value: 'CA', label: 'Canada' },
+  { value: 'FR', label: 'France' },
+  { value: 'DE', label: 'Germany' },
+  { value: 'GB', label: 'United Kingdom' },
+  { value: 'IT', label: 'Italy' },
+  { value: 'JP', label: 'Japan' },
+  { value: 'KR', label: 'South Korea' },
+  { value: 'MX', label: 'Mexico' },
+  { value: 'RU', label: 'Russia' },
+  { value: 'SA', label: 'Saudi Arabia' },
+  { value: 'ZA', label: 'South Africa' },
+  { value: 'ES', label: 'Spain' },
+];
+
 const App = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -116,18 +134,16 @@ const App = () => {
           <FormControl fullWidth variant="outlined">
             <InputLabel>Nationality</InputLabel>
             <Select
-              value={nationality}
-              label="Nationality"
-              onChange={(e) => setNationality(e.target.value)}
-            >
-              <MenuItem value="">All</MenuItem>
-              <MenuItem value="NG">Nigeria</MenuItem>
-              <MenuItem value="BR">Brazil</MenuItem>
-              <MenuItem value="CA">Canada</MenuItem>
-              <MenuItem value="FR">France</MenuItem>
-              <MenuItem value="DE">Germany</MenuItem>
-              <MenuItem value="GB">United Kingdom</MenuItem>              
-            </Select>
+            value={nationality}
+            label="Nationality"
+            onChange={(e) => setNationality(e.target.value)}
+          >
+            {countriesData.map((country) => (
+              <MenuItem key={country.value} value={country.value}>
+                {country.label}
+              </MenuItem>
+            ))}
+          </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
