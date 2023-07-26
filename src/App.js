@@ -188,6 +188,13 @@ const App = () => {
         </Grid>
       </Grid>
       <div style={{ marginTop: 20 }}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          style={{ textAlign: "center", marginBottom: "20px" }}
+        >
+          USERS LIST
+        </Typography>
         {isLoading ? (
           <CircularProgress color="primary" />
         ) : filteredUsers.length === 0 ? (
